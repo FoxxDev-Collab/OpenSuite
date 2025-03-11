@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "OpenSuite",
   "private": true,
   "scripts": {
     "build": "turbo run build",
