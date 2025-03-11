@@ -1,7 +1,7 @@
 # OpenSuite: The Complete Business Platform
 
 <div align="center">
-  <img src="https://via.placeholder.com/200x200?text=OpenSuite" alt="OpenSuite Logo" width="200" height="200">
+  <img src="./assets/images/opensuite-logo.svg" alt="OpenSuite Logo" width="200" height="200">
   <p><em>Empowering businesses with free, open-source tools for growth</em></p>
 </div>
 
@@ -64,7 +64,7 @@ OpenSuite is built on a modern technology stack designed for scalability, perfor
 - **Containerization**: Docker for consistent deployments
 - **Authentication**: JWT-based auth with centralized identity management
 
-![Architecture Diagram](https://via.placeholder.com/800x400?text=OpenSuite+Architecture)
+![Architecture Diagram](./assets/images/opensuite-architecture.svg)
 
 ### Key Architectural Principles
 

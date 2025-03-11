@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#f8f9fb"/>
+  
+  <!-- Title -->
+  <text x="600" y="50" font-family="Arial, sans-serif" font-weight="bold" font-size="30" text-anchor="middle" fill="#333">OpenSuite Architecture</text>
+  
+  <!-- Client Layer -->
+  <rect x="150" y="100" width="900" height="80" rx="10" fill="#e9ecef" stroke="#343a40" stroke-width="2"/>
+  <text x="600" y="145" font-family="Arial, sans-serif" font-weight="bold" font-size="20" text-anchor="middle" fill="#333">Client Applications</text>
+  
+  <!-- Client Applications -->
+  <rect x="170" y="115" width="120" height="50" rx="5" fill="#ffffff" stroke="#007bff" stroke-width="2"/>
+  <text x="230" y="145" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Web Browsers</text>
+  
+  <rect x="305" y="115" width="120" height="50" rx="5" fill="#ffffff" stroke="#007bff" stroke-width="2"/>
+  <text x="365" y="145" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Mobile Apps</text>
+  
+  <rect x="440" y="115" width="120" height="50" rx="5" fill="#ffffff" stroke="#007bff" stroke-width="2"/>
+  <text x="500" y="145" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Desktop Apps</text>
+  
+  <rect x="575" y="115" width="120" height="50" rx="5" fill="#ffffff" stroke="#007bff" stroke-width="2"/>
+  <text x="635" y="145" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Third-party Apps</text>
+  
+  <!-- Load Balancer -->
+  <rect x="150" y="210" width="900" height="60" rx="10" fill="#dee2e6" stroke="#343a40" stroke-width="2"/>
+  <text x="600" y="245" font-family="Arial, sans-serif" font-weight="bold" font-size="16" text-anchor="middle" fill="#333">API Gateway / Load Balancer</text>
+  
+  <!-- Connection Lines from Clients to Gateway -->
+  <line x1="230" y1="165" x2="230" y2="210" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="365" y1="165" x2="365" y2="210" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="500" y1="165" x2="500" y2="210" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="635" y1="165" x2="635" y2="210" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Frontends Layer -->
+  <rect x="150" y="300" width="900" height="100" rx="10" fill="#e9ecef" stroke="#343a40" stroke-width="2"/>
+  <text x="600" y="330" font-family="Arial, sans-serif" font-weight="bold" font-size="20" text-anchor="middle" fill="#333">Frontend Applications (Next.js/React)</text>
+  
+  <!-- Frontend Applications -->
+  <rect x="170" y="340" width="130" height="50" rx="5" fill="#ffffff" stroke="#28a745" stroke-width="2"/>
+  <text x="235" y="370" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Identity Frontend</text>
+  
+  <rect x="310" y="340" width="130" height="50" rx="5" fill="#ffffff" stroke="#28a745" stroke-width="2"/>
+  <text x="375" y="370" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Home Portal</text>
+  
+  <rect x="450" y="340" width="130" height="50" rx="5" fill="#ffffff" stroke="#28a745" stroke-width="2"/>
+  <text x="515" y="370" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">ERP Frontend</text>
+  
+  <rect x="590" y="340" width="130" height="50" rx="5" fill="#ffffff" stroke="#28a745" stroke-width="2"/>
+  <text x="655" y="370" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">HRM Frontend</text>
+  
+  <rect x="730" y="340" width="130" height="50" rx="5" fill="#ffffff" stroke="#28a745" stroke-width="2"/>
+  <text x="795" y="370" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">CRM Frontend</text>
+  
+  <rect x="870" y="340" width="160" height="50" rx="5" fill="#ffffff" stroke="#28a745" stroke-width="2"/>
+  <text x="950" y="370" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Other Frontends...</text>
+  
+  <!-- Connection Lines from Gateway to Frontends -->
+  <line x1="230" y1="270" x2="230" y2="340" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="375" y1="270" x2="375" y2="340" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="515" y1="270" x2="515" y2="340" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="655" y1="270" x2="655" y2="340" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="795" y1="270" x2="795" y2="340" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="950" y1="270" x2="950" y2="340" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Service Layer -->
+  <rect x="150" y="430" width="900" height="130" rx="10" fill="#e9ecef" stroke="#343a40" stroke-width="2"/>
+  <text x="600" y="460" font-family="Arial, sans-serif" font-weight="bold" font-size="20" text-anchor="middle" fill="#333">Microservices (Hono.js/TypeScript)</text>
+  
+  <!-- Services -->
+  <rect x="170" y="480" width="130" height="60" rx="5" fill="#d1ecf1" stroke="#17a2b8" stroke-width="2"/>
+  <text x="235" y="512" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Identity Engine</text>
+  <text x="235" y="530" font-family="Arial, sans-serif" font-style="italic" font-size="12" text-anchor="middle" fill="#333">Auth & Users</text>
+  
+  <rect x="310" y="480" width="130" height="60" rx="5" fill="#d1ecf1" stroke="#17a2b8" stroke-width="2"/>
+  <text x="375" y="512" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Home Engine</text>
+  <text x="375" y="530" font-family="Arial, sans-serif" font-style="italic" font-size="12" text-anchor="middle" fill="#333">Portal & Navigation</text>
+  
+  <rect x="450" y="480" width="130" height="60" rx="5" fill="#d1ecf1" stroke="#17a2b8" stroke-width="2"/>
+  <text x="515" y="512" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">ERP Engine</text>
+  <text x="515" y="530" font-family="Arial, sans-serif" font-style="italic" font-size="12" text-anchor="middle" fill="#333">Finance & Inventory</text>
+  
+  <rect x="590" y="480" width="130" height="60" rx="5" fill="#d1ecf1" stroke="#17a2b8" stroke-width="2"/>
+  <text x="655" y="512" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">HRM Engine</text>
+  <text x="655" y="530" font-family="Arial, sans-serif" font-style="italic" font-size="12" text-anchor="middle" fill="#333">HR & Employees</text>
+  
+  <rect x="730" y="480" width="130" height="60" rx="5" fill="#d1ecf1" stroke="#17a2b8" stroke-width="2"/>
+  <text x="795" y="512" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">CRM Engine</text>
+  <text x="795" y="530" font-family="Arial, sans-serif" font-style="italic" font-size="12" text-anchor="middle" fill="#333">Sales & Customers</text>
+  
+  <rect x="870" y="480" width="160" height="60" rx="5" fill="#d1ecf1" stroke="#17a2b8" stroke-width="2"/>
+  <text x="950" y="512" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Other Services...</text>
+  <text x="950" y="530" font-family="Arial, sans-serif" font-style="italic" font-size="12" text-anchor="middle" fill="#333">Support, IT, Collab</text>
+  
+  <!-- Connection Lines from Frontends to Services -->
+  <line x1="235" y1="390" x2="235" y2="480" stroke="#6c757d" stroke-width="2"/>
+  <line x1="375" y1="390" x2="375" y2="480" stroke="#6c757d" stroke-width="2"/>
+  <line x1="515" y1="390" x2="515" y2="480" stroke="#6c757d" stroke-width="2"/>
+  <line x1="655" y1="390" x2="655" y2="480" stroke="#6c757d" stroke-width="2"/>
+  <line x1="795" y1="390" x2="795" y2="480" stroke="#6c757d" stroke-width="2"/>
+  <line x1="950" y1="390" x2="950" y2="480" stroke="#6c757d" stroke-width="2"/>
+  
+  <!-- Event Bus -->
+  <rect x="150" y="590" width="900" height="50" rx="10" fill="#f8d7da" stroke="#dc3545" stroke-width="2"/>
+  <text x="600" y="620" font-family="Arial, sans-serif" font-weight="bold" font-size="16" text-anchor="middle" fill="#333">Event Bus / Message Queue</text>
+  
+  <!-- Connection Lines from Services to Event Bus -->
+  <line x1="235" y1="540" x2="235" y2="590" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="375" y1="540" x2="375" y2="590" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="515" y1="540" x2="515" y2="590" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="655" y1="540" x2="655" y2="590" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="795" y1="540" x2="795" y2="590" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="950" y1="540" x2="950" y2="590" stroke="#6c757d" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Database Layer -->
+  <rect x="150" y="670" width="900" height="100" rx="10" fill="#e9ecef" stroke="#343a40" stroke-width="2"/>
+  <text x="600" y="700" font-family="Arial, sans-serif" font-weight="bold" font-size="20" text-anchor="middle" fill="#333">Databases (PostgreSQL)</text>
+  
+  <!-- Databases -->
+  <rect x="170" y="710" width="130" height="50" rx="5" fill="#ffffff" stroke="#6f42c1" stroke-width="2"/>
+  <text x="235" y="740" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">identity_engine</text>
+  
+  <rect x="310" y="710" width="130" height="50" rx="5" fill="#ffffff" stroke="#6f42c1" stroke-width="2"/>
+  <text x="375" y="740" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">home_engine</text>
+  
+  <rect x="450" y="710" width="130" height="50" rx="5" fill="#ffffff" stroke="#6f42c1" stroke-width="2"/>
+  <text x="515" y="740" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">erp_engine</text>
+  
+  <rect x="590" y="710" width="130" height="50" rx="5" fill="#ffffff" stroke="#6f42c1" stroke-width="2"/>
+  <text x="655" y="740" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">hrm_engine</text>
+  
+  <rect x="730" y="710" width="130" height="50" rx="5" fill="#ffffff" stroke="#6f42c1" stroke-width="2"/>
+  <text x="795" y="740" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">crm_engine</text>
+  
+  <rect x="870" y="710" width="160" height="50" rx="5" fill="#ffffff" stroke="#6f42c1" stroke-width="2"/>
+  <text x="950" y="740" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Other Databases...</text>
+  
+  <!-- Connection Lines from Services to Databases -->
+  <line x1="235" y1="640" x2="235" y2="710" stroke="#6c757d" stroke-width="2"/>
+  <line x1="375" y1="640" x2="375" y2="710" stroke="#6c757d" stroke-width="2"/>
+  <line x1="515" y1="640" x2="515" y2="710" stroke="#6c757d" stroke-width="2"/>
+  <line x1="655" y1="640" x2="655" y2="710" stroke="#6c757d" stroke-width="2"/>
+  <line x1="795" y1="640" x2="795" y2="710" stroke="#6c757d" stroke-width="2"/>
+  <line x1="950" y1="640" x2="950" y2="710" stroke="#6c757d" stroke-width="2"/>
+  
+  <!-- Special Connections -->
+  <!-- Identity service connects to all other services for auth -->
+  <path d="M 235 520 Q 600 560 950 520" stroke="#17a2b8" stroke-width="2" stroke-dasharray="2,2" fill="none"/>
+  <text x="600" y="553" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#17a2b8">Authentication & Authorization</text>
+  
+  <!-- Legend -->
+  <rect x="930" y="110" width="120" height="130" rx="5" fill="#ffffff" stroke="#343a40" stroke-width="1"/>
+  <text x="990" y="125" font-family="Arial, sans-serif" font-weight="bold" font-size="12" text-anchor="middle" fill="#333">Legend</text>
+  
+  <rect x="940" y="135" width="15" height="15" fill="#ffffff" stroke="#007bff" stroke-width="1"/>
+  <text x="995" y="147" font-family="Arial, sans-serif" font-size="10" fill="#333">Client Apps</text>
+  
+  <rect x="940" y="155" width="15" height="15" fill="#ffffff" stroke="#28a745" stroke-width="1"/>
+  <text x="995" y="167" font-family="Arial, sans-serif" font-size="10" fill="#333">Frontend Apps</text>
+  
+  <rect x="940" y="175" width="15" height="15" fill="#d1ecf1" stroke="#17a2b8" stroke-width="1"/>
+  <text x="995" y="187" font-family="Arial, sans-serif" font-size="10" fill="#333">Microservices</text>
+  
+  <rect x="940" y="195" width="15" height="15" fill="#ffffff" stroke="#6f42c1" stroke-width="1"/>
+  <text x="995" y="207" font-family="Arial, sans-serif" font-size="10" fill="#333">Databases</text>
+  
+  <line x1="940" y1="215" x2="955" y2="215" stroke="#17a2b8" stroke-width="2" stroke-dasharray="2,2"/>
+  <text x="995" y="217" font-family="Arial, sans-serif" font-size="10" fill="#333">Auth Flow</text>
+</svg>
