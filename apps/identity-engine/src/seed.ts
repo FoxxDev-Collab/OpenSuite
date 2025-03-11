@@ -1,103 +1,72 @@
 import { hash } from 'bcrypt';
-import { db } from '../src/database/db';
-import { users, roles, permissions, userRoles, rolePermissions } from '../src/database/schema';
-import { config } from 'dotenv';
+import { AppDataSource } from './database/data-source';
+import { User } from './database/entities/User';
+import { Role } from './database/entities/Role';
+import { Permission } from './database/entities/Permission';
 
-// Load environment variables
-config();
+export async function seed() {
+  console.log('Seeding database...');
 
-async function seed() {
-  console.log('Starting seed process...');
-  
-  // Create default roles
-  console.log('Creating roles...');
-  const createdRoles = await db.insert(roles).values([
-    { name: 'Admin', description: 'System administrator with full access' },
-    { name: 'User', description: 'Standard user with limited access' }
-  ]).returning();
-  
-  console.log(`Created ${createdRoles.length} roles`);
-  
-  // Map role names to IDs for easier reference
-  const roleMap = createdRoles.reduce((map, role) => {
-    map[role.name] = role.id;
-    return map;
-  }, {} as Record<string, number>);
-  
-  // Create permissions
-  console.log('Creating permissions...');
-  const permissionsToCreate = [
-    // User management permissions
-    { code: 'user:read', description: 'View user information', service: 'identity_engine' },
-    { code: 'user:create', description: 'Create new users', service: 'identity_engine' },
-    { code: 'user:update', description: 'Update existing users', service: 'identity_engine' },
-    { code: 'user:delete', description: 'Delete users', service: 'identity_engine' },
+  try {
+    // Initialize database connection if not initialized
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
     
-    // Role management permissions
-    { code: 'role:read', description: 'View roles', service: 'identity_engine' },
-    { code: 'role:create', description: 'Create new roles', service: 'identity_engine' },
-    { code: 'role:update', description: 'Update existing roles', service: 'identity_engine' },
-    { code: 'role:delete', description: 'Delete roles', service: 'identity_engine' },
+    // Create default roles
+    const adminRole = new Role();
+    adminRole.name = 'admin';
+    adminRole.description = 'System administrator with full access';
+    await AppDataSource.manager.save(adminRole);
+
+    const userRole = new Role();
+    userRole.name = 'user';
+    userRole.description = 'Standard user with basic access';
+    await AppDataSource.manager.save(userRole);
+
+    // Create default permissions
+    const userReadPerm = new Permission();
+    userReadPerm.code = 'user:read';
+    userReadPerm.description = 'Can read user information';
+    userReadPerm.service = 'identity';
+    await AppDataSource.manager.save(userReadPerm);
+
+    const userWritePerm = new Permission();
+    userWritePerm.code = 'user:write';
+    userWritePerm.description = 'Can create and modify users';
+    userWritePerm.service = 'identity';
+    await AppDataSource.manager.save(userWritePerm);
+
+    // Assign permissions to roles
+    adminRole.permissions = [userReadPerm, userWritePerm];
+    userRole.permissions = [userReadPerm];
     
-    // Permission management
-    { code: 'permission:read', description: 'View permissions', service: 'identity_engine' },
-    { code: 'permission:assign', description: 'Assign permissions to roles', service: 'identity_engine' }
-  ];
-  
-  const createdPermissions = await db.insert(permissions).values(permissionsToCreate).returning();
-  console.log(`Created ${createdPermissions.length} permissions`);
-  
-  // Map permission codes to IDs for easier reference
-  const permissionMap = createdPermissions.reduce((map, permission) => {
-    map[permission.code] = permission.id;
-    return map;
-  }, {} as Record<string, number>);
-  
-  // Assign permissions to roles
-  console.log('Assigning permissions to roles...');
-  
-  // Admin gets all permissions
-  const adminPermissions = createdPermissions.map(permission => ({
-    roleId: roleMap['Admin'],
-    permissionId: permission.id
-  }));
-  
-  // Regular users only get basic permissions
-  const userPermissions = [
-    { roleId: roleMap['User'], permissionId: permissionMap['user:read'] }
-  ];
-  
-  await db.insert(rolePermissions).values([...adminPermissions, ...userPermissions]);
-  
-  // Create admin user
-  console.log('Creating admin user...');
-  const passwordHash = await hash('Admin123!', 10);
-  
-  const [adminUser] = await db.insert(users).values({
-    email: 'admin@opensuite.com',
-    passwordHash,
-    firstName: 'System',
-    lastName: 'Administrator',
-    emailVerified: true
-  }).returning();
-  
-  console.log(`Created admin user: ${adminUser.email}`);
-  
-  // Assign admin role to admin user
-  await db.insert(userRoles).values({
-    userId: adminUser.id,
-    roleId: roleMap['Admin']
-  });
-  
-  console.log('Seed completed successfully!');
+    await AppDataSource.manager.save([adminRole, userRole]);
+
+    // Create admin user
+    const adminUser = new User();
+    adminUser.email = 'admin@opensuite.com';
+    adminUser.passwordHash = await hash('Admin123!', 10);
+    adminUser.firstName = 'Admin';
+    adminUser.lastName = 'User';
+    adminUser.emailVerified = true;
+    adminUser.active = true;
+    adminUser.roles = [adminRole];
+
+    await AppDataSource.manager.save(adminUser);
+
+    console.log('Database seeded successfully!');
+    console.log('Admin credentials: admin@opensuite.com / Admin123!');
+
+  } catch (error) {
+    console.error('Error seeding database:', error);
+    throw error;
+  }
 }
 
-// Execute the seed function
-seed()
-  .catch(e => {
-    console.error('Seed failed:', e);
-    process.exit(1);
-  })
-  .finally(() => {
-    process.exit(0);
+// Run seed if called directly
+if (require.main === module) {
+  seed().catch(console.error).finally(() => {
+    AppDataSource.destroy();
   });
+}
