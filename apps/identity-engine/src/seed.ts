@@ -12,48 +12,92 @@ export async function seed() {
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
     }
+
+    const roleRepository = AppDataSource.getRepository(Role);
+    const permissionRepository = AppDataSource.getRepository(Permission);
+    const userRepository = AppDataSource.getRepository(User);
     
-    // Create default roles
-    const adminRole = new Role();
-    adminRole.name = 'admin';
-    adminRole.description = 'System administrator with full access';
-    await AppDataSource.manager.save(adminRole);
+    // Create default roles if they don't exist
+    let adminRole = await roleRepository.findOneBy({ name: 'admin' });
+    if (!adminRole) {
+      adminRole = new Role();
+      adminRole.name = 'admin';
+      adminRole.description = 'System administrator with full access';
+      await roleRepository.save(adminRole);
+      console.log('Created admin role');
+    }
 
-    const userRole = new Role();
-    userRole.name = 'user';
-    userRole.description = 'Standard user with basic access';
-    await AppDataSource.manager.save(userRole);
+    let userRole = await roleRepository.findOneBy({ name: 'user' });
+    if (!userRole) {
+      userRole = new Role();
+      userRole.name = 'user';
+      userRole.description = 'Standard user with basic access';
+      await roleRepository.save(userRole);
+      console.log('Created user role');
+    }
 
-    // Create default permissions
-    const userReadPerm = new Permission();
-    userReadPerm.code = 'user:read';
-    userReadPerm.description = 'Can read user information';
-    userReadPerm.service = 'identity';
-    await AppDataSource.manager.save(userReadPerm);
+    // Create default permissions if they don't exist
+    let userReadPerm = await permissionRepository.findOneBy({ code: 'user:read' });
+    if (!userReadPerm) {
+      userReadPerm = new Permission();
+      userReadPerm.code = 'user:read';
+      userReadPerm.description = 'Can read user information';
+      userReadPerm.service = 'identity';
+      await permissionRepository.save(userReadPerm);
+      console.log('Created user:read permission');
+    }
 
-    const userWritePerm = new Permission();
-    userWritePerm.code = 'user:write';
-    userWritePerm.description = 'Can create and modify users';
-    userWritePerm.service = 'identity';
-    await AppDataSource.manager.save(userWritePerm);
+    let userWritePerm = await permissionRepository.findOneBy({ code: 'user:write' });
+    if (!userWritePerm) {
+      userWritePerm = new Permission();
+      userWritePerm.code = 'user:write';
+      userWritePerm.description = 'Can create and modify users';
+      userWritePerm.service = 'identity';
+      await permissionRepository.save(userWritePerm);
+      console.log('Created user:write permission');
+    }
 
-    // Assign permissions to roles
-    adminRole.permissions = [userReadPerm, userWritePerm];
-    userRole.permissions = [userReadPerm];
+    // Assign permissions to roles if not already assigned
+    adminRole = await roleRepository.findOne({
+      where: { name: 'admin' },
+      relations: ['permissions']
+    });
     
-    await AppDataSource.manager.save([adminRole, userRole]);
+    if (adminRole && userReadPerm && userWritePerm) {
+      if (!adminRole.permissions || adminRole.permissions.length === 0) {
+        adminRole.permissions = [userReadPerm, userWritePerm];
+        await roleRepository.save(adminRole);
+        console.log('Assigned permissions to admin role');
+      }
+    }
 
-    // Create admin user
-    const adminUser = new User();
-    adminUser.email = 'admin@opensuite.com';
-    adminUser.passwordHash = await hash('Admin123!', 10);
-    adminUser.firstName = 'Admin';
-    adminUser.lastName = 'User';
-    adminUser.emailVerified = true;
-    adminUser.active = true;
-    adminUser.roles = [adminRole];
+    userRole = await roleRepository.findOne({
+      where: { name: 'user' },
+      relations: ['permissions']
+    });
+    
+    if (userRole && userReadPerm) {
+      if (!userRole.permissions || userRole.permissions.length === 0) {
+        userRole.permissions = [userReadPerm];
+        await roleRepository.save(userRole);
+        console.log('Assigned permissions to user role');
+      }
+    }
 
-    await AppDataSource.manager.save(adminUser);
+    // Create admin user if it doesn't exist
+    let adminUser = await userRepository.findOneBy({ email: 'admin@opensuite.com' });
+    if (!adminUser && adminRole) {
+      adminUser = new User();
+      adminUser.email = 'admin@opensuite.com';
+      adminUser.passwordHash = await hash('Admin123!', 10);
+      adminUser.firstName = 'Admin';
+      adminUser.lastName = 'User';
+      adminUser.emailVerified = true;
+      adminUser.active = true;
+      adminUser.roles = [adminRole];
+      await userRepository.save(adminUser);
+      console.log('Created admin user');
+    }
 
     console.log('Database seeded successfully!');
     console.log('Admin credentials: admin@opensuite.com / Admin123!');

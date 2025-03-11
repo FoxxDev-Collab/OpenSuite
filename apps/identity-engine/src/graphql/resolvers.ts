@@ -4,12 +4,14 @@ import { AppDataSource } from '../database/data-source';
 import { User } from '../database/entities/User';
 import { Role } from '../database/entities/Role';
 import { Permission } from '../database/entities/Permission';
-import { Context } from './context';
+import type { Context as HonoContext } from 'hono';
+import type { Context as GraphQLContext } from './context';
 
 export const resolvers = {
   Query: {
-    me: async (_: any, __: any, ctx: Context) => {
-      if (!ctx.user) return null;
+    me: async (_: any, __: any, c: HonoContext) => {
+      const ctx = c.get('graphqlContext') as GraphQLContext;
+      if (!ctx?.user) return null;
       return await AppDataSource.getRepository(User).findOne({
         where: { id: ctx.user.id },
         relations: ['roles', 'roles.permissions']
